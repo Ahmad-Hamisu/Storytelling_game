@@ -1,0 +1,23 @@
+{% extends 'base.html' %} {% block content %}
+<div class="container mt-4">
+  <div class="jumbotron">
+    <h1 class="display-4">Welcome to MythMingle Chronicles</h1>
+    <p class="lead">Embark on a mythical journey and share your tales!</p>
+    <hr class="my-4" />
+    <p>
+      Discover fascinating stories, create your own legends, and connect with a
+      community of mythmakers.
+    </p>
+    <a
+      class="btn btn-primary btn-lg"
+      href="{% url 'story_list' %}"
+      role="button"
+      >Story List</a
+    >
+  </div>
+</div>
+
+<div class="container mt-4">
+  <main>{% block inner_content %}{% endblock %}</main>
+</div>
+{% endblock %}

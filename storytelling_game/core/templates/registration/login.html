@@ -1,0 +1,42 @@
+{% extends 'base.html' %} {% block title %}Login - MythMingle{% endblock %} 
+{%block content%}
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h2 class="text-center">Login</h2>
+        </div>
+        <div class="card-body">
+          <form method="post" action="{% url 'login' %}" class="form">
+            {% csrf_token %} {% if form.non_field_errors %}
+            <div class="alert alert-danger" role="alert">
+              {{ form.non_field_errors.as_text }}
+            </div>
+            {% endif %}
+            <div class="mb-3">
+            {{ form.username.label_tag }} {{ form.username }} 
+            <div class="invalid-feedback" {{ form.username.errors|length|default:'' }}>
+              {{ form.username.errors.0 }}
+            </div>
+            </div>
+
+            <div class="mb-3">
+              {{ form.password.label_tag }} {{ form.password }} 
+              <div class="invalid-feedback" {{ form.password.errors|length|default:'' }}>
+                {{ form.password.errors.0 }}
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Login</button>
+          </form>
+        </div>
+        <div class="card-footer text-center">
+          <p class="mb-0">Don't have an account?</p>
+          <a href="{% url 'signup' %}" class="btn btn-link">Sign up</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

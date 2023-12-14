@@ -1,0 +1,54 @@
+{% extends 'base.html' %} {% block content %}
+<div class="container mt-4">
+  <!-- Story Card -->
+  <div class="card">
+    <div class="card-body">
+      <!-- Story Title -->
+      <h2 class="card-title">{{ story.title }}</h2>
+
+      <!-- Current Tweet (if available) -->
+      {% if story.current_tweet %}
+      <p class="card-text">
+        <strong>Current Tweet:</strong> {{ story.current_tweet.content }}
+      </p>
+      {% endif %}
+
+      <!-- Section Heading for Tweets -->
+      <h3 class="card-subtitle mb-2 text-muted">Tweets</h3>
+
+      <!-- List of Tweets -->
+      <ul class="list-group">
+        {% for tweet in story.tweets.all %}
+        <li class="list-group-item">
+          <!-- Individual Tweet -->
+          <div class="d-flex justify-content-between align-items-center">
+            <!-- Tweet Content and User Info -->
+            <div>
+              <p>{{ tweet.content }}</p>
+              <p class="mb-0">
+                By: {{ tweet.user.username }} | {{ tweet.created_at|date:"F d, Y
+                H:i" }}
+              </p>
+            </div>
+
+            <!-- Votes Badge -->
+            <span class="badge badge-primary badge-pill">
+              {{ tweet.votes }} {% if tweet.votes == 1 %}vote{% else %}votes{%
+              endif %}
+            </span>
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+
+      <!-- Contribute Tweet Button -->
+      <a
+        href="{% url 'contribute_tweet' story.id %}"
+        class="btn btn-primary mt-3"
+      >
+        Contribute a Tweet
+      </a>
+    </div>
+  </div>
+</div>
+{% endblock %}

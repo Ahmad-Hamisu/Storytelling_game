@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}MythMingle Chronicles{% endblock %}</title>
+
+    <!-- Bootstrap CSS link -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+
+    <!-- Custom Styles -->
+    <style>
+      body {
+        background-color: #f8f9fa;
+        color: #333;
+        font-family: "Arial", sans-serif;
+      }
+
+      .navbar {
+        background-color: #3498db;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .navbar-brand {
+        color: #ecf0f1;
+        font-weight: bold;
+        font-size: 1.5rem;
+      }
+
+      .navbar-toggler-icon {
+        background-color: #ecf0f1;
+      }
+
+      .navbar-nav .nav-link {
+        color: #ecf0f1 !important;
+        font-weight: bold;
+      }
+
+      main {
+        background-color: #ecf0f1;
+        border-radius: 8px;
+        padding: 20px;
+        margin-top: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      footer {
+        background-color: #3498db;
+        margin-top: 20px;
+        padding: 10px 0;
+        color: #ecf0f1;
+      }
+
+      /* Font Awesome Icons */
+      .fa {
+        margin-right: 5px;
+      }
+
+      /* Optional: Additional Styles for Storytelling */
+      .story-container {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .story-header {
+        font-weight: bold;
+        margin-bottom: 10px;
+        color: #333;
+      }
+
+      .story-content {
+        margin-bottom: 10px;
+        color: #555;
+      }
+
+      .story-footer {
+        color: #888;
+        font-size: 14px;
+      }
+
+      @media (max-width: 576px) {
+        /* Adjust styles for small screens */
+        body,
+        main,
+        .story-container,
+        footer {
+          color: #333;
+        }
+
+        .navbar-toggler {
+          order: -1;
+        }
+
+        .navbar-collapse {
+          background-color: #3498db;
+          padding: 10px;
+        }
+
+        .navbar-nav {
+          text-align: center;
+        }
+      }
+    </style>
+  </head>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <a class="navbar-brand" href="{% url 'home' %}">MythMingle</a>
+
+            
+            <li class="nav-item">
+                <a class="btn btn-lg btn-action m-2" href="{% url 'story_list' %}"><i class="fas fa-list"></i> View Stories</a>
+            </li>
+            <li class="nav-item">
+                <a class="btn btn-lg btn-action m-2" href="{% url 'create_story' %}"><i class="fas fa-plus"></i> Create Story</a>
+            </li>
+            
+        </ul>
+    </div>
+
+    {% if request.user.is_authenticated %}
+    <li class="nav-item">
+      <a href="{% url 'logout' %}" class="btn btn-primary btn-action"
+        >Logout</a
+      >
+    </li>
+    {% else %}
+    <li class="nav-item">
+      <a href="{%url 'signup'%}" class="btn btn-primary btn-action"
+        >Sign up</a
+      >
+    </li>
+    <li class="nav-item">
+      <a href="{%url 'login'%}" class="btn btn-secondary btn-action"
+        >Log in</a
+      >
+    </li>
+    {% endif %}
+</nav>
+
+<div class="container mt-4">
+    <main>
+        <h1>{% block content_title %}{% endblock %}</h1>
+        {% block content %}{% endblock %}
+    </main>
+</div>
+
+<footer class="bg-light text-center py-3">
+    <p>&copy; 2023 MythMingle</p>
+</footer>
+
+<!-- Bootstrap JS and Popper.js scripts -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<!-- Custom JavaScript -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Custom JavaScript code goes here
+
+        // Example: Change the navbar background color on scroll
+        window.addEventListener("scroll", function () {
+            var navbar = document.querySelector(".navbar");
+            if (window.scrollY > 50) {
+                navbar.style.backgroundColor = "#2c3e50";
+            } else {
+                navbar.style.backgroundColor = "#3498db";
+            }
+        });
+
+        // Example: Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener("click", function (e) {
+                e.preventDefault();
+
+                document.querySelector(this.getAttribute("href")).scrollIntoView({
+                    behavior: "smooth"
+                });
+            });
+        });
+    });
+</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="your-ad-client-id"
+         data-ad-slot="your-ad-slot-id"
+         data-ad-format="auto"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+
+</body>
+</html>
+

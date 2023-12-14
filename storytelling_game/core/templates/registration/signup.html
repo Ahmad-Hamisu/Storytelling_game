@@ -1,0 +1,50 @@
+{% extends 'base.html' %} {% block title %}Sign Up - Your Site{% endblock %} {%
+block content %}
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h2 class="text-center">Sign Up</h2>
+        </div>
+        <div class="card-body">
+          <form method="post" action="{% url 'signup' %}" class="form">
+            {% csrf_token %}
+
+            <div class="mb-3">
+              {{ form.username.label_tag }} {{ form.username }} <div
+              class="invalid-feedback" {{ form.username.errors|length|default:''
+              }}> {{ form.username.errors.0 }}
+            </div>
+
+            <div class="mb-3">
+              {{ form.email.label_tag }} {{ form.email }} 
+              <div class="invalid-feedback " {{ form.email.errors|length|default:''
+            }}>>{{ form.email.errors.0 }}</div>
+            </div>
+
+            <div class="mb-3">
+              {{ form.password1.label_tag }} {{ form.password1 }}
+              <div class="invalid-feedback" {{ form.password1.errors|length|default:'' }}>
+                >{{ form.password1.errors.0 }}</div>
+            
+            </div>
+
+            <div class="mb-3">
+              {{ form.password2.label_tag }} {{ form.password2 }} 
+              <div class="invalid-feedback"  {{ form.password.errors|length|default:'' }}>{{ form.password2.errors.0 }}</div>
+              
+            </div>
+
+            <button type="submit" class="btn btn-primary">Sign Up</button>
+          </form>
+        </div>
+        <div class="card-footer text-center">
+          <p class="mb-0">Already have an account?</p>
+          <a href="{% url 'login' %}" class="btn btn-link">Login</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

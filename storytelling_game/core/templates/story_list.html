@@ -1,0 +1,68 @@
+{% extends 'base.html' %} {% block content %}
+<div class="container mt-4">
+  <div class="jumbotron">
+    <h1 class="display-4">Welcome to MythMingle Chronicles</h1>
+    <p class="lead">Embark on a mythical journey and share your tales!</p>
+    <hr class="my-4" />
+    <p>
+      Discover fascinating stories, create your own legends, and connect with a
+      community of mythmakers.
+    </p>
+    <div class="container mt-4">
+      <h2>Story List</h2>
+
+      <ul class="list-group">
+        {% for story in stories %}
+        <li class="list-group-item">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <h5 class="mb-1">
+                <a href="{% url 'story_detail' story.id %}"
+                  >{{ story.title }}</a
+                >
+              </h5>
+              <p class="mb-1">Author: {{ story.author.username }}</p>
+              <small>Created on: {{ story.created_at|date }}</small>
+            </div>
+            <span
+              class="badge badge-primary badge-pill"
+              id="like-badge-{{ story.id }}"
+              data-story-id="{{ story.id }}"
+              data-likes-count="{{ story.likes.count }}"
+            >
+              {{ story.likes.count }} Likes
+            </span>
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+      <a href="{% url 'create_story' %}" class="btn btn-primary mt-3"
+        >Create a Story</a
+      >
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var likeButtons = document.querySelectorAll('[id^="like-badge-"]');
+
+        likeButtons.forEach(function (likeButton) {
+          likeButton.addEventListener("click", function () {
+            var storyId = this.getAttribute("data-story-id");
+            var likesCount = parseInt(this.getAttribute("data-likes-count"));
+
+            // Send AJAX request to like_story view
+            fetch(`/like_story/${storyId}/`)
+              .then((response) => response.json())
+              .then((data) => {
+                // Update likes count and toggle 'liked' class
+                this.innerHTML = data.likes + " Likes";
+                this.setAttribute("data-likes-count", data.likes);
+              });
+          });
+        });
+      });
+    </script>
+
+    {% endblock %}
+  </div>
+</div>
